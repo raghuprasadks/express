@@ -1,0 +1,14 @@
+html
+	head
+		title Form Tester
+	body
+		form(action="/",method="POST")
+			div
+				label(for="firstname") First Name:
+				input(name="firstName" value="")
+			br
+			div
+				label(for="lastName") Last Name:
+				input(name="lastName" value="")
+			br
+			button(type="submit") Send Details

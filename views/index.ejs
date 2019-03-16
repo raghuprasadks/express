@@ -1,0 +1,9 @@
+<% include partials/header%>
+<h1>hello from ejs template</h1>
+<h2><%=title %></h2>
+<ul>
+<% users.forEach(function(user){%>
+<li><%=user.first_name %></li>
+<% }) %>	
+</ul>
+<% include partials/footer %>

@@ -1,0 +1,24 @@
+{
+  "name": "expresstutorial",
+  "version": "1.0.0",
+  "description": "Express tutorial",
+  "main": "customerform.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "express-validator": "^4.1.0",
+    "mongojs": "^2.4.1",
+    "mongoose": "^4.11.9",
+    "morgan": "^1.8.2",
+    "multer": "^1.3.0",
+    "pug": "^2.0.0-rc.3"
+  }
+}

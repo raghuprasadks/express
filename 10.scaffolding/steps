@@ -1,0 +1,3 @@
+npm install -g yeoman
+npm install -g generator-express-simple
+yo express-simple test-app
