@@ -1,0 +1,246 @@
+﻿// install mogodb
+// set up data/db folder
+// to start mongodb
+
+mongod
+
+// to run on command prompt
+mongo
+
+use incarnus
+show dbs
+//insert document
+db.movie.insert({"name":"tutorials point"})
+
+// drop database
+
+>use incarnus
+switched to db mydb
+>db.dropDatabase()
+>{ "dropped" : "mydb", "ok" : 1 }
+>
+// create collection
+
+db.createCollection(name, options)
+
+//
+>use test
+switched to db test
+>db.createCollection("mycollection")
+{ "ok" : 1 }
+>
+
+// show collection
+
+show collections
+
+// collection with options
+
+>db.createCollection("mycol", { capped : true, autoIndexId : true, size : 
+   6142800, max : 10000 } )
+{ "ok" : 1 }
+>
+
+// automatic collection creation..This will create student collection
+
+db.student.insert({"name" : "raghu"})
+
+// drop collection
+db.COLLECTION_NAME.drop()
+db.student.drop()
+
+// insert document
+
+>db.post.insert({
+   title: 'MongoDB Overview', 
+   description: 'MongoDB is no sql database',
+   by: 'tutorials point',
+   url: 'http://www.tutorialspoint.com',
+   tags: ['mongodb', 'database', 'NoSQL'],
+   likes: 100
+})
+
+// multiple records...
+
+>db.post.insert([
+   {
+      title: 'MongoDB Overview', 
+      description: 'MongoDB is no sql database',
+      by: 'tutorials point',
+      url: 'http://www.tutorialspoint.com',
+      tags: ['mongodb', 'database', 'NoSQL'],
+      likes: 100
+   },
+	
+   {
+      title: 'NoSQL Database', 
+      description: "NoSQL database doesn't have tables",
+      by: 'tutorials point',
+      url: 'http://www.tutorialspoint.com',
+      tags: ['mongodb', 'database', 'NoSQL'],
+      likes: 20, 
+      comments: [	
+         {
+            user:'user1',
+            message: 'My first comment',
+            dateCreated: new Date(2013,11,10,2,35),
+            like: 0 
+         }
+      ]
+   }
+])
+
+
+// find
+
+>db.COLLECTION_NAME.find()
+db.mycol.find();
+db.mycol.find().pretty()
+
+---
+Equality {<key>:<value>}   db.post.find({"by":"tutorials point"}).pretty()   where by = 'tutorials point'
+Less Than   {<key>:{$lt:<value>}}   db.post.find({"likes":{$lt:50}}).pretty()   where likes < 50
+Less Than Equals  {<key>:{$lte:<value>}}  db.post.find({"likes":{$lte:50}}).pretty()  where likes <= 50
+Greater Than   {<key>:{$gt:<value>}}   db.post.find({"likes":{$gt:50}}).pretty()   where likes > 50
+Greater Than Equals  {<key>:{$gte:<value>}}  db.post.find({"likes":{$gte:50}}).pretty()  where likes >= 50
+Not Equals  {<key>:{$ne:<value>}}   db.post.find({"likes":{$ne:50}}).pretty()   where likes != 50
+
+
+---
+AND in MongoDB
+Syntax
+In the find() method, if you pass multiple keys by separating them by ',' then MongoDB treats it as AND condition. Following is the basic syntax of AND −
+
+>db.mycol.find(
+   {
+      $and: [
+         {key1: value1}, {key2:value2}
+      ]
+   }
+).pretty()
+Example
+Following example will show all the tutorials written by 'tutorials point' and whose title is 'MongoDB Overview'.
+
+>db.post.find({$and:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty() 
+
+
+
+----
+OR in MongoDB
+Syntax
+To query documents based on the OR condition, you need to use $or keyword. Following is the basic syntax of OR −
+
+>db.mycol.find(
+   {
+      $or: [
+         {key1: value1}, {key2:value2}
+      ]
+   }
+).pretty()
+
+db.post.find({$or:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()
+
+
+----
+Using AND and OR Together
+Example
+The following example will show the documents that have likes greater than 10 and whose title is either 'MongoDB Overview' or by is 'tutorials point'. Equivalent SQL where clause is 'where likes>10 AND (by = 'tutorials point' OR title = 'MongoDB Overview')'
+
+db.post.find({"likes": {$gt:10}, $or: [{"by": "tutorials point"},
+   {"title": "MongoDB Overview"}]}).pretty()
+-------
+ MongoDB Update() Method
+
+ db.post.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}})
+
+ ----
+ By default, MongoDB will update only a single document. To update multiple documents, you need to set a parameter 'multi' to true.
+ ----
+ db.post.update({'title':'MongoDB Overview'},
+   {$set:{'title':'New MongoDB Tutorial'}},{multi:true})
+
+
+-----
+
+MongoDB Save() Method
+The save() method replaces the existing document with the new document passed in the save() method.
+
+----
+db.post.save(
+   {
+      "_id" : ObjectId("5983548781331adf45ec7"), "title":"Tutorials Point New Topic",
+         "by":"Tutorials Point"
+   }
+)
+---   
+Delete Document--remove
+---
+db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)
+---
+db.post.remove({'title':'MongoDB Overview'})
+---
+Remove Only One
+---
+db.post.remove({'title':'MongoDB Overview'},1)
+---
+Projection - displaying required keys
+---
+MongoDB's find() method, explained in MongoDB Query Document accepts second optional parameter that is list of fields that you want to retrieve. In MongoDB, when you execute find() method, then it displays all fields of a document. To limit this, you need to set a list of fields with value 1 or 0. 1 is used to show the field while 0 is used to hide the fields.
+--
+db.post.find({},{"title":1,_id:0})
+
+---
+Limit Records
+----
+db.post.find({},{"title":1,_id:0}).limit(2)
+
+---
+MongoDB Skip() Method
+Apart from limit() method, there is one more method skip() which also accepts number type argument and is used to skip the number of documents.
+
+Syntax
+The basic syntax of skip() method is as follows −
+
+>db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)
+---
+Example
+Following example will display only the second document.
+
+>db.post.find({},{"title":1,_id:0}).limit(1).skip(1)
+----
+Sort Records
+----
+The sort() Method
+To sort documents in MongoDB, you need to use sort() method. The method accepts a document containing a list of fields along with their sorting order. To specify sorting order 1 and -1 are used. 1 is used for ascending order while -1 is used for descending order.
+---
+db.COLLECTION_NAME.find().sort({KEY:1})
+
+----
+db.mycol.find({},{"title":1,_id:0}).sort({"title":-1})
+
+
+--- mongoose
+https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
+
+
+---
+db.posts.insert([{"pid":1,"name":"mongo training","postedby":"raghu","totallikes":100,
+"totalcomments":2,
+"comments":"[{"by":"ashwin","comment":"good"},{"by":"druva","comment":"Excellent"},
+{"pid":2,"name":"angular training training","postedby":"raghu","totallikes":50,
+"totalcomments":2,
+"comments":"[{"by":"ashwin","comment":"really good"},{"by":"druva","comment":"nice"}
+]);
+
+db.course.find( { }, 
+                { students : 
+                    { $elemMatch : 
+                       { id : ObjectId("51780f796ec4051a536015d0"), 
+                         name : "Sam" 
+                       } 
+                    } 
+                } 
+);
+
+///
+db.posts.insert({"pid":2,"name":"angular training","postedby":"raghu","totallikes":50, "totalcomments":2,"comments":[{"by":"druva","comment":"liked this"},{"by":"ashwin","comment":"excellent"}]});
