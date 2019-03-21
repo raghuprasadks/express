@@ -1,7 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Product = require('../product.js');
+var Product = require('./product.js');
+console.log('inside product api');
+
+
+mongoose.connect('mongodb://localhost/training');
+
+
 
 /* GET ALL PRODUCTS */
 router.get('/', function(req, res, next) {

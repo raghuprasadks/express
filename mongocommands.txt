@@ -3,12 +3,20 @@
 // to start mongodb
 
 mongod
-
 // to run on command prompt
 mongo
-
-use incarnus
 show dbs
+use mongodemo
+show dbs
+
+db.createCollection("course")
+
+show collections
+db.course.insert({"name":"MEAN"})
+db.course.find()
+db.course.find().pretty()
+
+
 //insert document
 db.movie.insert({"name":"tutorials point"})
 
@@ -244,3 +252,9 @@ db.course.find( { },
 
 ///
 db.posts.insert({"pid":2,"name":"angular training","postedby":"raghu","totallikes":50, "totalcomments":2,"comments":[{"by":"druva","comment":"liked this"},{"by":"ashwin","comment":"excellent"}]});
+
+https://dzone.com/articles/top-10-most-common-commands-for-beginners
+https://www.opentechguides.com/how-to/article/mongodb/118/mongodb-cheatsheat.html
+https://www.opentechguides.com/how-to/article/mongodb/118/mongodb-cheatsheat.html
+https://gist.github.com/leommoore/6751647
+https://www.guru99.com/mongodb-create-user.html

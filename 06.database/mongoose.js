@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-// for parsing application/json
+// for parsingm application/json
 app.use(bodyParser.json()); 
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -41,7 +41,8 @@ app.get('/people', function(req, res){
 });
 // Update
 app.put('/people/:id', function(req, res){
-   Person.findByIdAndUpdate(req.params.id, req.body, 
+   console.log('inside update '+req.params.id);
+   Person.findByIdAndUpdate(req.params.user_id, req.body, 
       function(err, response){
       if(err) res.json(
          {message: "Error in updating person with id " 
